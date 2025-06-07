@@ -1,0 +1,15 @@
+# Ambienti Virtuali
+venv/
+webscraper/
+
+# File di sistema e cache di Python
+__pycache__/
+*.pyc
+
+# File di output
+*.csv
+*.log
+
+# File specifici del sistema operativo
+.DS_Store
+Thumbs.db
