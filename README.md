@@ -1,122 +1,141 @@
-# BookHarvest — Pipeline di Web Scraping Professionale
+# 📚 BookHarvest: Enterprise Data Acquisition & Web Harvesting Engine
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup4-HTML%20Parsing-green)
-![Pandas](https://img.shields.io/badge/Pandas-Export%20CSV-150458?logo=pandas&logoColor=white)
-![requests](https://img.shields.io/badge/requests-HTTP-blue)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/BeautifulSoup4-HTML%20Parsing-green" alt="BeautifulSoup" />
+  <img src="https://img.shields.io/badge/Requests-HTTP%20Client-blue" alt="Requests" />
+  <img src="https://img.shields.io/badge/Pandas-Data%20Structuring-150458?logo=pandas&logoColor=white" alt="Pandas" />
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License" />
+</p>
 
-## Panoramica
+**BookHarvest** è un motore di acquisizione dati (Web Scraper) progettato per la raccolta massiva e strutturata di informazioni da portali e-commerce. Il progetto implementa una pipeline di "harvesting" professionale che crawla cataloghi multi-pagina, estrae attributi di prodotto con alta precisione e produce Data Products (CSV/Parquet) pronti per l'analisi di Market Intelligence e Price Monitoring.
 
-Pipeline di web scraping che crawla le 50 pagine del catalogo [books.toscrape.com](http://books.toscrape.com), estrae dati strutturati per 1.000 libri e produce un CSV pulito. Il progetto dimostra un approccio professionale alla raccolta dati: funzioni single-responsibility, logging strutturato, gestione robusta degli errori e isolamento delle dipendenze.
+## 🏢 Valore Enterprise & Settori di Applicazione
 
-Competenza applicabile in progetti enterprise di data collection da sorgenti web, arricchimento dati di prodotto, price intelligence e integrazione di fonti dati eterogenee.
-
-## Valore Enterprise
-
-| Settore / Azienda | Rilevanza |
+| Settore / Ambito | Rilevanza & Benefici |
 |-------------------|-----------|
-| Retail & E-commerce | Price monitoring, product data enrichment, competitive intelligence |
-| IT Consulting (Accenture, NTT Data) | Data collection da sorgenti esterne come fase di pipeline ETL |
-| Data Reply / Engineering | Integrazione scraper in workflow di ingestione dati enterprise |
-| Qualsiasi settore | Raccolta dati strutturati da sorgenti web non-API |
-
-## Output
-
-| Campo | Tipo | Esempio |
-|-------|------|---------|
-| `title` | string | "A Light in the Attic" |
-| `price` | float (£) | 51.77 |
-| `star_rating` | int (1–5) | 3 |
-| `availability` | string | "In stock" |
-
-Output finale: `books_data.csv` — 1.000 righe, una per libro.
-
-## Caratteristiche
-
-- Crawling automatico di tutte le 50 pagine tramite rilevamento paginazione
-- Logging strutturato: progresso per pagina ed eventi di errore
-- Gestione errori: timeout di rete, fallimenti di parsing
-- Parser `lxml` per analisi HTML veloce e affidabile
-
-## Setup
-
-```bash
-git clone https://github.com/sylver86/05-book-scraper-python-beautifulsoup.git
-cd 05-book-scraper-python-beautifulsoup
-
-python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-python src/scraper.py
-```
-
-## Struttura Repository
-
-```
-05-book-scraper-python-beautifulsoup/
-├── src/
-│   └── scraper.py       # fetch_html · parse_page · handle_pagination · export_csv
-├── requirements.txt
-├── LICENSE
-└── README.md
-```
-
-## Stack Tecnologico
-
-`Python 3.10+` · `requests` · `BeautifulSoup4` · `lxml` · `pandas`
+| **Retail & E-commerce** | Competitive Price Monitoring: tracciamento automatico dei prezzi della concorrenza per dinamiche di repricing. |
+| **Market Research** | Data Acquisition per l'analisi dei trend di mercato, disponibilità a stock e monitoraggio del sentiment (star ratings). |
+| **Product Data Enrichment** | Arricchimento dei cataloghi aziendali tramite l'estrazione di metadati esterni da fonti web non dotate di API ufficiali. |
+| **Lead Generation** | Raccolta automatizzata di contatti o informazioni aziendali da directory pubbliche per alimentare pipeline di vendita. |
 
 ---
 
+## 🎯 Executive Summary & Valore di Business
+BookHarvest risolve il problema dell'acquisizione dati da fonti web non strutturate, garantendo un flusso di informazioni pulito, tipizzato e automatizzabile.
+
+### 🏛️ 1. Pipeline di Harvesting Modulare
+* **Crawling Intelligente:** Rilevamento automatico della paginazione e gestione del loop di crawling per la scansione completa di cataloghi estesi (1.000+ record su 50+ pagine).
+* **Single Responsibility Principle (SRP):** Codice strutturato in funzioni atomiche (`fetch`, `parse`, `extract`, `save`), facilitando la manutenzione e l'adattamento a nuove sorgenti web.
+
+### ⚙️ 2. Resilienza e Performance
+* **Gestione Errori & Retry:** Implementazione di logiche per la gestione dei timeout di rete e dei fallimenti di parsing, evitando il crash della pipeline durante sessioni di scraping prolungate.
+* **Efficient Parsing (lxml):** Utilizzo del parser `lxml` sotto il cofano di BeautifulSoup per garantire velocità di esecuzione superiori rispetto al parser standard HTML di Python.
+
+### 🛡️ 3. Data Quality & Logging
+* **Structured Logging:** Sistema di log che traccia in tempo reale il progresso della raccolta, facilitando il monitoraggio e il debugging degli eventi critici.
+* **Data Cleaning in-transit:** Trasformazione dei dati grezzi durante l'estrazione (es. conversione prezzi in float, normalizzazione rating in interi), garantendo un output immediatamente utilizzabile per analisi statistiche.
+
 ---
 
-# BookHarvest — Professional Web Scraping Pipeline 🇬🇧
+## 🏗️ Architettura del Motore
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup4-HTML%20Parsing-green)
+```mermaid
+graph TD
+    subgraph "Target Web"
+        WEB["🌐 E-commerce Website<br/>(Multiple Pages)"]
+    end
 
-## Overview
+    subgraph "Acquisition Engine"
+        REQ["📥 Requests Manager<br/>(User-Agent Handling)"]
+        BS4["🔥 BeautifulSoup Parser<br/>(lxml backend)"]
+        EXT["🔍 Data Extractor<br/>(Selector Logic)"]
+    end
 
-Web scraping pipeline that crawls all 50 pages of [books.toscrape.com](http://books.toscrape.com), extracts structured data for 1,000 books, and produces a clean CSV. Demonstrates a production-style approach: single-responsibility functions, structured logging, robust error handling, and dependency isolation.
+    subgraph "Data Structuring"
+        PND["🐼 Pandas DataFrame<br/>(Typing & Cleaning)"]
+        CSV["📄 Final Data Product<br/>(books_data.csv)"]
+    end
 
-## Output
+    WEB --> REQ
+    REQ --> BS4
+    BS4 --> EXT
+    EXT --> PND
+    PND --> CSV
 
-| Field | Type | Example |
-|-------|------|---------|
-| `title` | string | "A Light in the Attic" |
-| `price` | float (£) | 51.77 |
-| `star_rating` | int (1–5) | 3 |
-| `availability` | string | "In stock" |
+    style WEB fill:#ff922b,color:#fff
+    style REQ fill:#339af0,color:#fff
+    style CSV fill:#51cf66,color:#fff
+```
 
-Output: `books_data.csv` — 1,000 rows, one per book.
+## 🛠️ Stack Tecnologico
 
-## Features
+| Layer | Tecnologia | Ruolo |
+|:------|:-----------|:-----|
+| 🐍 **Language** | Python 3.10+ | Core development |
+| 🌐 **Networking** | Requests | HTTP Request Handling |
+| 🔍 **Parsing** | BeautifulSoup4 / lxml | HTML Content Extraction |
+| 🐼 **Structuring** | pandas | Data cleaning & CSV export |
+| 📋 **Logging** | Python Logging | Process monitoring |
 
-- Automatic pagination crawling across all 50 pages
-- Structured logging: per-page progress and error events
-- Graceful error handling: network timeouts, parsing failures
-- `lxml` parser for fast, reliable HTML parsing
-
-## Setup
+## 🚀 Setup
 
 ```bash
+# Clone
 git clone https://github.com/sylver86/05-book-scraper-python-beautifulsoup.git
 cd 05-book-scraper-python-beautifulsoup
 
-python -m venv venv && source venv/bin/activate
+# Virtual Env & Install
+python -m venv venv
+source venv/bin/activate  # (venv\Scripts\activate su Windows)
 pip install -r requirements.txt
+
+# Run
 python src/scraper.py
 ```
 
-## Project Structure
+<br><br>
 
-```
-05-book-scraper-python-beautifulsoup/
-├── src/
-│   └── scraper.py       # fetch_html · parse_page · handle_pagination · export_csv
-├── requirements.txt
-├── LICENSE
-└── README.md
+*Progettato e sviluppato da Eugenio Pasqua.*
+
+---
+
+# 🇬🇧 ENGLISH VERSION
+
+# 📚 BookHarvest: Enterprise Data Acquisition & Web Harvesting Engine
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/BeautifulSoup4-HTML%20Parsing-green" alt="BeautifulSoup" />
+</p>
+
+**BookHarvest** is a data acquisition engine (Web Scraper) designed for mass and structured information collection from e-commerce portals. The project implements a professional "harvesting" pipeline that crawls multi-page catalogs, extracts product attributes with high precision, and produces Data Products (CSV/Parquet) ready for Market Intelligence and Price Monitoring analysis.
+
+## 🏢 Enterprise Value & Application Sectors
+
+| Sector / Domain | Relevance & Benefits |
+|-------------------|-----------|
+| **Retail & E-commerce** | Competitive Price Monitoring: automatic tracking of competitor prices for dynamic repricing strategies. |
+| **Market Research** | Data Acquisition for market trend analysis, stock availability, and sentiment monitoring. |
+| **Product Data Enrichment** | Corporate catalog enrichment through external metadata extraction from web sources without official APIs. |
+
+---
+
+## 🏗️ Engine Architecture
+
+```mermaid
+graph TD
+    WEB["🌐 Target Web"] --> REQ["📥 Requests Manager"]
+    REQ --> BS4["🔥 BeautifulSoup Parser"]
+    BS4 --> EXT["🔍 Data Extractor"]
+    EXT --> PND["🐼 Pandas DataFrame"]
+    PND --> CSV["📄 Final CSV"]
 ```
 
-## Technologies
+## 🧰 Technology Stack
 
 `Python 3.10+` · `requests` · `BeautifulSoup4` · `lxml` · `pandas`
+
+<br><br>
+
+*Designed and developed by Eugenio Pasqua.*
