@@ -1,64 +1,73 @@
-# Web Scraper for "Books to Scrape"
+# Book Scraper — Python Web Scraping Pipeline
 
-## Project Overview and Goals
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup4-Parsing-green)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Export-150458?logo=pandas&logoColor=white)
 
-This project contains a Python script designed to scrape book data from the sandbox website [books.toscrape.com](http://books.toscrape.com).
+## Overview
 
-The primary goal of this project is not just to extract data, but to demonstrate a professional approach to software engineering and data pipeline development. The key objectives were:
+Web scraper that crawls all 50 pages of [books.toscrape.com](http://books.toscrape.com), extracts structured data for every book in the catalogue, and exports a clean CSV — 1,000 books total.
 
-1.  **Functional Objective**: To build a reliable scraper that navigates all pages of the catalogue and extracts four key data points for each book: title, price, star rating, and availability. The final output is a clean, structured CSV file.
+Demonstrates a production-style scraping pipeline: modular single-responsibility functions, structured logging, robust error handling for network and parsing failures, and dependency isolation via `venv`.
 
-2.  **Technical & Engineering Objectives**: To showcase best practices in building a data-oriented application. This includes:
-    * **Modularity**: Structuring the code into small, single-responsibility functions (e.g., for fetching HTML, parsing details, handling pagination) to improve readability, testing, and maintenance.
-    * **Dependency Management**: Using a dedicated virtual environment (`venv`) and a `requirements.txt` file to ensure the project is isolated and easily reproducible.
-    * **Robustness**: Implementing structured logging for clear process monitoring and robust error handling for network or parsing failures.
-    * **Professional Project Structure**: Organizing the project with a standard layout (`src` directory, `.gitignore`, detailed `README`) to mirror real-world development environments.
+---
+
+## Output
+
+| Field | Type | Example |
+|-------|------|---------|
+| title | string | "A Light in the Attic" |
+| price | float (£) | 51.77 |
+| star_rating | int (1–5) | 3 |
+| availability | string | "In stock" |
+
+Output: `books_data.csv` — 1,000 rows, one per book.
+
+---
 
 ## Features
 
--   **Data Extraction**: Scrapes Title, Price (in Pounds), Star Rating (1-5), and Availability status.
--   **Automated Pagination**: Automatically navigates through all 50 pages of the catalogue.
--   **Structured Logging**: Provides clear, formatted logs for monitoring the scraping process.
--   **Robust Error Handling**: Manages network errors and potential parsing issues gracefully.
--   **Clean Data Output**: Exports the collected data into a well-formed CSV file named `books_data.csv`.
+- Crawls all 50 pages automatically via pagination detection
+- Structured logging: per-page progress and error events
+- Graceful error handling for network timeouts and parsing failures
+- `lxml` parser for fast, reliable HTML parsing
 
-## Technologies Used
+---
 
--   Python 3.10+
--   `requests` for handling HTTP requests.
--   `BeautifulSoup4` with the `lxml` parser for HTML parsing.
--   `pandas` for data structuring and CSV export.
+## Setup
 
-## Setup and Installation
+```bash
+git clone https://github.com/sylver86/05-book-scraper-python-beautifulsoup.git
+cd 05-book-scraper-python-beautifulsoup
 
-To set up and run this project on your local machine, follow these steps:
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/your-username/your-repository-name.git](https://github.com/your-username/your-repository-name.git)
-    cd your-repository-name
-    ```
-
-2.  **Create and activate a virtual environment:**
-    ```bash
-    # Create the virtual environment
-    python -m venv venv
-
-    # Activate it
-    # On Windows:
-    # venv\Scripts\activate
-    # On macOS/Linux:
-    source venv/bin/activate
-    ```
-
-3.  **Install the required dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+pip install -r requirements.txt
+```
 
 ## Usage
 
-Once the setup is complete, you can run the scraper with the following command from the project's root directory:
-
 ```bash
 python src/scraper.py
+```
+
+`books_data.csv` is written to the project root on completion.
+
+---
+
+## Code Structure
+
+```
+05-book-scraper-python-beautifulsoup/
+├── src/
+│   └── scraper.py      # fetch_html · parse_page · handle_pagination · export_csv
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Technologies
+
+`Python 3.10+` · `requests` · `BeautifulSoup4` · `lxml` · `pandas`
